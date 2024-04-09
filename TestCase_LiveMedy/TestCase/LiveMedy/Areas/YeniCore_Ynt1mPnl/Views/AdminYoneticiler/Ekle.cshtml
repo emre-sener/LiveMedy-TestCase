@@ -1,0 +1,156 @@
+﻿@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+
+@model LiveMedy.Models.LiveMedyYntYoneticiler
+
+@using (Html.BeginForm("Ekle", "AdminYoneticiler", FormMethod.Post, new { @role = "form", @id = "frmYonetici" }))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>YÖNETİM PANELİ KULLANICISI EKLE</h4>
+        </div>
+        <div class="panel-body">
+
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.HiddenFor(y => y.YoneticiId)
+
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class ="control-label">Rolü</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.DropDownListFor(y => y.RolId, new SelectList(ViewBag.Roller, "RolId", "Adi"), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Adı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(y => y.Adi, new { @class = "required form-control" })
+                        @Html.ValidationMessageFor(y => y.Adi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Soyadı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(y => y.Soyadi, new { @class = "required form-control" })
+                        @Html.ValidationMessageFor(y => y.Soyadi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Kullanıcı Adı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(y => y.KullaniciAdi, new { @class = "required form-control" })
+                        @Html.ValidationMessageFor(y => y.KullaniciAdi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">E-Posta</label>
+                      
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(y => y.Eposta, new { @class = "required email form-control" })
+                        @Html.ValidationMessageFor(y => y.Eposta)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Telefon</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(h => h.TelefonNo, new { @class = " form-control numbers", @type = "text", @placeholder = "5552321234", @maxlength = "10", @minlength = "10", @required = "required" })
+
+                        @Html.ValidationMessageFor(y => y.TelefonNo)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Şifre</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBoxFor(y => y.Sifre, new { @class = "required form-control", @type = "password" })
+                        @Html.ValidationMessageFor(y => y.Sifre)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Şifre Tekrar</label>
+       
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.TextBox("SifreTekrar", "", new { @class = "required form-control", @type = "password" })
+                        @Html.ValidationMessage("SifreTekrar")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Aktif Mi?</label>
+                    </div>
+                    <div class="col-md-10">
+                        @Html.CheckBox("AktifMi", (bool)(Model == null ? true : Model.AktifMi))
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-offset-2">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function(){
+        $("#frmYonetici").submit(function() {
+            if ($("#Sifre").val() != $("#SifreTekrar").val()) {
+               BootstrapDialog.show({
+                        title: 'Bilgilendirme',
+                        message: 'Şifre alanları aynı değil. Lütfen tekrar giriş yapınız.'
+               });
+               return false;
+            }
+        });
+
+        $("#KullaniciAdi").change(function () {
+            var kullaniciAdi = $("#KullaniciAdi").val();
+            if (kullaniciAdi != "") {
+                $.ajax({
+                    url: "/YeniCore_Ynt1mPnl/AdminYoneticiler/KullaniciAdiKontrolEt/" + kullaniciAdi,
+                    type: "POST",
+                    data: {
+                        kullaniciAdi: kullaniciAdi
+                    },
+                    success: function (data) {
+                        if (data) {
+                            BootstrapDialog.show({
+                                title: 'Bilgilendirme',
+                                message: 'Kayıtlı Kullanıcı Adı! Lütfen tekrar giriş yapınız.'
+                            });
+                            $("#KullaniciAdi").val('');
+                        }
+                    },
+                    error: function () {
+                        alert("Kullanıcı adı kontrol işlemi sırasında bir hata oluştu!");
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>
+
+
+
+

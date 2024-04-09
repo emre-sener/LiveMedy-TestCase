@@ -1,0 +1,50 @@
+﻿@model LiveMedy.Models.LiveMedyYntUygulamalar
+<div class="form-horizontal">
+
+    @Html.HiddenFor(s => s.UygulamaId)
+    @Html.HiddenFor(s => s.EklenmeTarihi)
+    <div class="form-group ">
+        <div class="col-md-2">
+            <label class="control-label">Uygulama Adı</label>
+        </div>
+        <div class="col-lg-6">
+            @Html.TextBoxFor(s => s.UygulamaAdi, new { @class = "required form-control" })
+            @Html.ValidationMessageFor(s => s.UygulamaAdi, String.Empty, new { @class = "validate" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label">Uygulama Açıklama</label>
+        </div>
+        <div class="col-lg-8 ckEditorAlani">
+            @Html.TextAreaFor(s => s.UygulamaAciklama, new { @class = "required form-control", @id = "edtAciklama" })
+            @await Html.PartialAsync("~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/CKEditorAlaniPart.cshtml", "edtAciklama")
+        </div>
+    </div>
+    <div class="form-group ">
+        <div class="col-md-2">
+            <label class="control-label">Uygulama Url</label>
+        </div>
+        <div class="col-lg-6">
+            @Html.TextBoxFor(s => s.UygulamaUrl, new { @class = "required form-control" })
+            @Html.ValidationMessageFor(s => s.UygulamaUrl, String.Empty, new { @class = "validate" })
+        </div>
+    </div>
+    <div class="form-group ">
+        <div class="col-md-2">
+            <label class="control-label">Sıra</label>
+        </div>
+        <div class="col-lg-6">
+            @Html.TextBoxFor(s => s.Sira, new { @class = "required digits form-control" })
+            @Html.ValidationMessageFor(s => s.Sira, String.Empty, new { @class = "validate" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2">
+            <label class="control-label">Aktif Mi?</label>
+        </div>
+        <div class="col-lg-6">
+            @Html.CheckBox("AktifMi", (bool)(Model == null ? true : Model.AktifMi))
+        </div>
+    </div>
+</div>

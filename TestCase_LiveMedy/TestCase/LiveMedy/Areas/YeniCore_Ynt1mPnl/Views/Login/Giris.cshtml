@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli - Web Sitesi</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/Scripts/YonetimPaneli/admin-giris/css/main.css" />
+    <!--[if IE]>
+    <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <script src="/Scripts/jquery.min.js"></script>
+
+
+    <script src='https://www.google.com/recaptcha/api.js?hl=tr'></script>
+
+</head>
+<body style="background-image: none;">
+
+    <div class="container">
+        <!--#LOGIN-START -->
+        <div class="login" style="border-radius: 0px; border: 2px solid navy; padding: 0px !important; width:390px; height:500px">
+
+            <div class="login_title" style="height:50px; margin-top:50px">
+                <span class="d-none d-lg-block" style="font-size: 30px; color: navy; font-weight: bold; vertical-align: middle; margin: 0 auto;">Live Medy Test Case</span>
+            </div>
+            <div class="login_fields" style="width:100% !important">
+                <form id="loginform" name="loginform" action="@Url.Action("Giris", "Login")" method="post">
+                    <div class="login_fields__user">
+                        <div class="icon">
+                            <img src="/Scripts/YonetimPaneli/admin-giris/img/user_icon.png">
+                        </div>
+                        <input name="KullaniciAdi" placeholder="Kullanıcı Adı" type="text" autocomplete="off" style="border-radius: 0px; border: 2px solid navy; margin-left:14px !important; width:90% !important">
+                        <div class="validation">
+                            <img src="/Scripts/YonetimPaneli/admin-giris/img/tick.png">
+                        </div>
+                    </div>
+                    <div class="login_fields__password">
+                        <div class="icon">
+                            <img src="/Scripts/YonetimPaneli/admin-giris/img/lock_icon.png">
+                        </div>
+                        <input name="Sifre" placeholder="Parola" type="password" style="border-radius: 0px; border: 2px solid navy; margin-left:14px !important; width:90% !important">
+                        <div class="validation">
+                            <img src="/Scripts/YonetimPaneli/admin-giris/img/tick.png">
+                        </div>
+                        @* <div class="login_fields_lang">
+                        <input type="radio" name="radioDil" id="tr" class="css-checkbox" value="1" checked>
+                        <label for="tr" class="css-label radGroup2">TR</label>
+                        <input type="radio" name="radioDil" id="en" class="css-checkbox" value="2">
+                        <label for="en" class="css-label radGroup2">EN</label>
+                        </div> *@
+                    </div>
+
+                    <div class="login_fields__submit" style="text-align:center; left:0px">
+                        <div class="g-recaptcha" data-sitekey="6Ld-IHkpAAAAAM5PWcK6j7OJq-uZ6pkgc23ckequ"></div>
+                        <input type="submit" value="Giriş Yap" style="background-color:navy; border-radius:0px; margin-top:10px">
+                    </div>
+
+                    @if (ViewBag.IslemDurum == false)
+                    {
+                        <div class="login_fields__submit" style="text-align:center; left:0px; color:red; margin-top:20px">
+                            <span>@ViewBag.Mesaj</span>
+                        </div>
+                    }
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+<script>
+    window.onload = function () {
+        var $recaptcha = document.querySelector('#g-recaptcha-response');
+        if ($recaptcha) {
+            $recaptcha.setAttribute("required", "required");
+        };
+    }
+</script>

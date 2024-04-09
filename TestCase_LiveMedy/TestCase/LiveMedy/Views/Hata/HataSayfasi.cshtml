@@ -1,0 +1,121 @@
+﻿@*<div class="maintace-wrapper">
+
+        <div class="maintace-container">
+
+            <div class="message"><p>@ViewBag.ErrorMessage</p></div>
+        </div>
+
+    </div>
+
+
+    <style>
+        .maintace-wrapper {
+            position: relative;
+            height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .maintace-container {
+            display: block;
+            text-align: center;
+        }
+
+            .maintace-container .code h1 {
+                font-size: 150px;
+                font-weight: bold;
+            }
+
+            .maintace-container .message p {
+                font-size: 25px;
+            }
+    </style>*@
+     @using LiveMedy.Models;
+     @using LiveMedy.Models.Servisler;
+@*@inject CokluDilServisi Resource*@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+
+    <title>futbolanalitik.net</title>
+    <style>
+        body {
+            padding-top: 75px;
+            font-family: Arial, sans-serif;
+        }
+
+        a,
+        a:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .not-found-icon {
+            visibility: hidden;
+        }
+
+        .not-found-title {
+            color: rgb(219, 31, 48);
+            margin: 20px 0 25px;
+        }
+
+        .not-found-message {
+            color: #565656;
+            font-size: 16px;
+            line-height: 21px;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            border-radius: 6px;
+        }
+
+        .btn-not-found {
+            font-size: 16px;
+            padding: 20px 20px;
+            background: rgb(45, 98, 159);
+            border-color: #75a92a;
+            margin: 0 15px 15px 15px;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            box-sizing: border-box;
+            display: inline-block;
+            max-width: 46%;
+        }
+
+            .btn-not-found:hover {
+                background: rgb(28, 55, 85);
+            }
+    </style>
+    <link href="/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <h1 class="not-found-title"> Bir Hata Oluştu</h1>
+                <div class="not-found-message">
+                    <p>
+                        Bir Hata Oluştu
+                    </p>
+                </div>
+                <a href="/" class="btn btn-danger btn-not-found">Ana Sayfa</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

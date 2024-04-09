@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+
+@model List<LiveMedy.Models.LiveMedyYntUygulamalar>
+<div class="panel-heading">
+    <a href="/YeniCore_Ynt1mPnl/AdminUygulamalar/Ekle">
+        <span><i class="fa fa-plus-circle"></i></span>
+        <span><strong>Uygulama eklemek için tıklayınız</strong></span>
+    </a>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>UYGULAMA LİSTESİ</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Uygulama Adı </th>
+                            <th>Url</th>
+                            <th>Sıra</th>
+                            <th>AktifMi</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>Güncellenme Tarihi</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="tr_@item.UygulamaId">
+                                <td>@item.UygulamaAdi</td>
+                                <td>@item.UygulamaUrl</td>
+                                <td>
+                                    @Html.TextBoxFor(h => item.Sira, new { @class = "form-control required digits", id = "txtSira_" + item.UygulamaId, onchange = "SiraKaydet(" + item.UygulamaId + ")" })
+                                    @Html.ValidationMessageFor(h => item.Sira)
+                                </td>
+
+                                <td>
+                                    <button type="button" id="btnAktivasyon_@item.UygulamaId" class="btn btn-circle @((bool)item.AktifMi ? "btn-success" : "btn-warning")" onclick="AktivasyonIslemleri(@item.UygulamaId)"></button>
+                                </td>
+                                <td>@item.EklenmeTarihi</td>
+                                <td>@item.GuncellenmeTarihi</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-circle" onclick="Duzenle(@item.UygulamaId)">
+                                        <i class="fa fa-list"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-circle" onclick='Sil(@item.UygulamaId)'>
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function SiraKaydet(id) {
+        if (!$.isNumeric($("#txtSira_" + id).val())) {
+            BootstrapDialog.alert('Sıra için rakam giriniz.');
+        }
+        else {
+            $.ajax({
+                url: "/YeniCore_Ynt1mPnl/AdminUygulamalar/SiraDuzenle/",
+                data: {
+                    id: id,
+                    sira: $("#txtSira_" + id).val()
+                },
+                type: "POST",
+                success: function (data) {
+                    BootstrapDialog.alert('Sıra değiştirildi');
+                },
+                error: function () {
+                    BootstrapDialog.alert('Bir hata oluştu!');
+                }
+            })
+        }
+    }
+
+    function Duzenle(id) {
+        var url = "/YeniCore_Ynt1mPnl/AdminUygulamalar/Duzenle/" + id;
+        $(location).attr('href', url);
+    }
+
+    function Sil(id) {
+        BootstrapDialog.confirm('Silmek istediğinize emin misiniz?', function (result) {
+            if (result) {
+                $.ajax({
+                    url: "/YeniCore_Ynt1mPnl/AdminUygulamalar/Sil/" + id,
+                    type: "POST",
+                    success: function () {
+                        $("#tr_" + id).fadeOut("slow")
+                    },
+                    error: function () {
+                        BootstrapDialog.alert('Kayıt silme işlemi sırasında bir hata oluştu!');
+                    }
+                })
+            }
+        })
+
+    }
+
+    function AktivasyonIslemleri(id) {
+        $.ajax({
+            type: "GET",
+            url: "/YeniCore_Ynt1mPnl/AdminUygulamalar/AktivasyonIslemleri/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                if (data == true) {
+                    $("#btnAktivasyon_" + id).removeClass("btn-warning").addClass("btn-success");
+                }
+                else {
+                    $("#btnAktivasyon_" + id).removeClass("btn-success").addClass("btn-warning");
+                }
+            },
+            error: function () {
+                alert('Aktif-Pasif işlemi sırasında bir hata oluştu!');
+            }
+        });
+    }
+</script>
+<link href="~/css/core.css" rel="stylesheet" />
+<script src="~/js/core.js"></script>

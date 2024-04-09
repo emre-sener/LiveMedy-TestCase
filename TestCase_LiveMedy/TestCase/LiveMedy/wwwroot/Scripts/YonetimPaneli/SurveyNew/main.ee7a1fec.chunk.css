@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+code {
+    font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace
+}
+
+.panel {
+    padding-bottom: 120px;
+    padding-top: 30px
+}
+
+    .panel.col-md-3 {
+        background: #f4f4f4
+    }
+
+    .panel button.btn-question {
+        font-size: 1.1rem;
+        font-weight: 500;
+        text-align: left
+    }
+
+    .panel button svg {
+        fill: #fff;
+        width: 30px;
+        float: left;
+        margin-right: 30px
+    }
+
+.survey--question {
+    position: relative;
+    border: 1px solid rgba(0,0,0,.1);
+    margin: 15px 0;
+    padding-left: 130px;
+    padding-right: 100px;
+    min-height: 160px;
+    background: #eee
+}
+
+    .survey--question ul {
+        margin-top: 10px
+    }
+
+    .survey--question li {
+        border: 1px solid rgba(0,0,0,.1);
+        list-style: none;
+        background: #fff
+    }
+
+.question-buttons {
+    position: absolute;
+    left: 0;
+    width: 130px;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transition: all 1s;
+    transition: all 1s
+}
+
+.survey--question:hover .question-buttons {
+    opacity: 1
+}
+
+.question-buttons-right {
+    position: absolute;
+    right: 0;
+    width: 94px;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    -webkit-transition: all 1s;
+    transition: all 1s
+}
+
+.survey--question:hover .question-buttons-right {
+    opacity: 1
+}
+
+.survey--question button.update-question.btn.btn-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
+.survey--question button.delete-question {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    border: 5px solid #b22222
+}
+
+.survey--question button.order-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    font-size: 40px;
+    color: #fff
+}
+
+.survey--question button.order-top {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 50%;
+    font-size: 50px;
+    color: whte
+}
+
+.App {
+    text-align: center
+}
+
+.App-logo {
+    -webkit-animation: App-logo-spin 20s linear infinite;
+    animation: App-logo-spin 20s linear infinite;
+    height: 40vmin;
+    pointer-events: none
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #fff
+}
+
+.App-link {
+    color: #61dafb
+}
+
+@-webkit-keyframes App-logo-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+
+@keyframes App-logo-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+/*# sourceMappingURL=main.ee7a1fec.chunk.css.map */

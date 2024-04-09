@@ -1,0 +1,121 @@
+﻿a.dosya-link {
+    color: rgb(60, 118, 61);
+    padding: 0px 0 5px 0;
+    display: block;
+    text-decoration: underline;
+}
+
+a:hover.dosya-link {
+    color: rgb(43, 60, 79);
+}
+
+::selection {
+    background: #db1f30;
+    color: #fff;
+}
+
+.form-horizontal .validate {
+    color: tomato;
+}
+
+.form-group .col-lg-6 span.validate {
+    color: tomato;
+}
+
+.form-horizontal .control-label {
+    text-align: left;
+}
+
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+.push-top-20 {
+    margin-top: 20px;
+}
+
+span.kullaniciHakAdi {
+    display: inline;
+    position: relative;
+    top: -4px;
+}
+
+.kullaniciHak:hover {
+    background: #eee;
+}
+
+#page-wrapper {
+    min-height: 1000px !important;
+}
+
+.navbar .sidebar-nav.collapse {
+    left: 0px;
+    max-height: 1500px;
+    top: 0px;
+    background: white;
+    overflow: hidden;
+    width: 100%;
+    transition: max-height 0.8s;
+}
+
+    .navbar .sidebar-nav.collapse.in {
+        max-height: 1000px;
+        display: block;
+    }
+
+@media only screen and (max-width: 767px) {
+    #time {
+        position: absolute;
+        right: 10px;
+        top: 0px;
+    }
+
+    .left-sidebar-toggle {
+        font-size: 16px;
+        background: #2d3e52;
+        padding: 7px 3px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        color: white !important;
+        border-bottom: 1px solid #2d3e52;
+    }
+
+    .navbar-default {
+        border-bottom: 1px solid #2d3e52;
+    }
+
+    #frmMenuler .nav > li > a {
+        padding: 7px 15px;
+        display: block;
+        /* padding: 0 20px; */
+        font-size: 1.277rem;
+        line-height: 18px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+        #frmMenuler .nav > li > a i {
+            margin-right: 1px;
+        }
+
+    #frmMenuler .nav > li.active > ul {
+        padding-left: 15px;
+    }
+
+    #frmMenuler .nav > li.active {
+        border-left: 2.5px solid #2d3e52;
+        border-top-style: inset;
+        border-bottom-style: inset;
+        border-top-width: 4px;
+    }
+
+    ul.nav.navbar-top-links.navbar-right {
+        position: absolute;
+        top: 0px;
+        right: 50px;
+    }
+}

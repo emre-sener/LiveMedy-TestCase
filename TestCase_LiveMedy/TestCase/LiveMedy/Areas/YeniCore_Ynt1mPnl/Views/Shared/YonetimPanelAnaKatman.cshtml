@@ -1,0 +1,156 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Yönetim Paneli - Web Sitesi</title>
+    <link href="/Scripts/YonetimPaneli/sbadmin/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/datetime-picker/jquery.datetimepicker.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/css/print.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/chosen/chosen.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/css/main.css" rel="stylesheet" />
+    <link href="/Scripts/YonetimPaneli/sbadmin/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/Scripts/YonetimPaneli/sbadmin/bower_components/jquery/dist/jquery.js"></script>
+    @*<script src="/Scripts/YonetimPaneli/sbadmin/bower_components/jquery/dist/jquery.3.3.1.min.js"></script>*@
+    <script src="/Scripts/YonetimPaneli/sbadmin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/bootstrap/js/bootstrap-dialog.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/sbadmin/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/sbadmin/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/sbadmin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/sbadmin/dist/js/sb-admin-2.js"></script>
+    <script src="/Scripts/YonetimPaneli/datetime-picker/jquery.datetimepicker.js"></script>
+    <script src="/Scripts/YonetimPaneli/chosen/chosen.jquery.min.js"></script>
+    <script src="/Scripts/YonetimPaneli/chosen/chosen-main.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        @*@Html.Partial("Part/AdminMenuPart")*@
+        <partial name="~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/AdminMenuPart.cshtml" />
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <br />
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <script src="/Scripts/YonetimPaneli/validate/jquery.validate.js"></script>
+    <script src="/Scripts/YonetimPaneli/validate/jquery.validate.unobtrusive.js"></script>
+    <script src="/Scripts/YonetimPaneli/validate/messages_tr.js"></script>
+    <!-- /#wrapper -->
+
+    <link href="~/css/core.css" rel="stylesheet" />
+    <script src="~/js/core.js"></script>
+
+
+
+    <script type="text/javascript">
+        function startTimer(duration, display) {
+            var start = Date.now(),
+                diff,
+                minutes,
+                seconds;
+            function timer() {
+                diff = duration - (((Date.now() - start) / 1000) | 0);
+                // timeout * 60 saniye / 2
+                if (diff == 20 * 60 / 2) {
+                    BootstrapDialog.confirm('Oturum sürenizi uzatmak ister misiniz?', function (result) {
+                        if (result) {
+                            $.ajax({
+                                url: "/YeniCore_Ynt1mPnl/Login/OturumUzat",
+                                type: "POST",
+                                success: function () {
+                                    start = Date.now();
+                                },
+                                error: function () {
+                                    alert("Oturum uzatma işleminde bir sorun ile karşılaşıldı!");
+                                }
+                            });
+                        }
+                    });
+                }
+
+                minutes = (diff / 60) | 0;
+                seconds = (diff % 60) | 0;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+
+                if (diff <= 0) {
+                    clearInterval(interval);
+                    BootstrapDialog.show({
+                        id: 'modalSureDoldu',
+                        message: function (dialog) {
+                            dialog.setClosable(false);
+                            return 'Oturum Süreniz Doldu!';
+                        },
+                        buttons: [{
+                            label: 'Tamam',
+                            cssClass: 'btn-primary',
+                            action: function () {
+                                window.location.href = "/YeniCore_Ynt1mPnl/Login/Giris";
+                            }
+                        }]
+
+                    });
+                }
+            };
+
+            timer();
+            var interval = setInterval(timer, 1000);
+        }
+
+        window.onload = function () {
+            var sessionTimeOut = 20 * 60;
+            var display = document.querySelector('#time');
+            startTimer(sessionTimeOut, display);
+
+        };
+    </script>
+
+    <style type="text/css">
+        #time {
+            float: right;
+            font-size: 17px;
+            background-color: #e0e7ec;
+            border-radius: 5px;
+            margin-top: 10px;
+            padding: 5px;
+            color: white;
+            text-shadow: 1px 1px 1px black, 0 0 1em black, 0 0 0.2em;
+        }
+    </style>
+    <script type="text/javascript">
+
+        $('.alphaonly').bind('keyup blur', function () {
+            var node = $(this);
+            node.val(node.val().replace(/[^a-zA-Zğ,Ğ,ç,Ç,ş,Ş,ü,Ü,ö,Ö,ı,İ, " "]*$/g, ''));
+
+        }
+        );
+        $('.numbers').keyup(function () {
+            this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+    </script>
+</body>
+</html>

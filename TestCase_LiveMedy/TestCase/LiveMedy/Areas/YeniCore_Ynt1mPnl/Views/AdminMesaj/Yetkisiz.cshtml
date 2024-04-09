@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+
+    <title>Web Sitesi Yönetim Paneli</title>
+    <style>
+        body {
+            padding-top: 110px;
+            font-family: Arial, sans-serif;
+        }
+
+        a,
+        a:hover {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container {
+            width: 1170px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .not-found-icon {
+            visibility: hidden;
+        }
+
+        .not-found-title {
+            color: rgb(219, 31, 48);
+            margin: 20px 0 25px;
+        }
+
+        .not-found-message {
+            color: #565656;
+            font-size: 16px;
+            line-height: 21px;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            border-radius: 6px;
+        }
+
+        .btn-not-found {
+            font-size: 16px;
+            padding: 15px 50px;
+            background: rgb(45, 98, 159);
+            border-color: #75a92a;
+            margin: 0 15px 15px 15px;
+            -webkit-transition: all .2s ease-in-out;
+            -moz-transition: all .2s ease-in-out;
+            -ms-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+
+            .btn-not-found:hover {
+                background: rgb(28, 55, 85);
+            }
+    </style>
+</head>
+
+<body>
+
+    <div class="container text-center">
+        <h1 class="not-found-title">Bilgi Mesajı</h1>
+        <div class="not-found-message">
+            <p>
+                Sayfaya erişim yetkiniz bulunmamaktadır.
+            </p>
+        </div>
+        <a href="/YeniCore_Ynt1mPnl/AdminAnasayfa" class="btn btn-danger btn-not-found">Anasayfaya Git</a>
+    </div>
+
+
+</body>
+
+</html>

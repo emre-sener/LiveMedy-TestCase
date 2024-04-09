@@ -1,0 +1,12 @@
+﻿
+@if (ViewBag.IslemDurum != null)
+{
+    if (ViewBag.IslemDurum)
+    {
+        <div class="alert alert-success"> İşlem başarı ile tamamlanmıştır</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">Hata oluşmuştur. Lütfen tekrar deneyiniz. Problemin tekrar oluşması durumunda sistem yöneticinize başvurunuz.</div>
+    }
+}

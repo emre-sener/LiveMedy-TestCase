@@ -1,0 +1,114 @@
+﻿@using LiveMedy.Models;
+@{
+    List<LiveMedyYntMenuler> aktifMenuler = ViewBag.MenuListesi as List<LiveMedyYntMenuler>;
+    List<LiveMedyYntMenuler> aktifYoneticiMenuleri = new List<LiveMedyYntMenuler>();
+    List<LiveMedyYntMenuler> yoneticiAltMenuleri = new List<LiveMedyYntMenuler>();
+    List<LiveMedyYntAksiyonlar> kullaniciAksiyonListesi = ViewBag.KullaniciAksiyonListesi as List<LiveMedyYntAksiyonlar>;
+    List<string> kullaniciUrlListesi = new List<string>();
+    String mevcutUrl = ViewBag.MevcutUrl;
+
+    foreach (LiveMedyYntAksiyonlar aksiyon in kullaniciAksiyonListesi)
+    {
+        if (!kullaniciUrlListesi.Contains("/YeniCore_Ynt1mPnl/" + aksiyon.KontrolAdi + "/" + aksiyon.Adi))
+        {
+            kullaniciUrlListesi.Add("/YeniCore_Ynt1mPnl/" + aksiyon.KontrolAdi + "/" + aksiyon.Adi);
+        }
+    }
+
+    //listelenecek menuler oluşturulur
+    foreach (LiveMedyYntMenuler menu in aktifMenuler.Where(m => m.UstMenuId == -1))
+    {
+        bool menuEklensinMi = false;
+        yoneticiAltMenuleri = aktifMenuler.Where(m => m.UstMenuId == menu.MenuId).ToList();
+        if (yoneticiAltMenuleri.Count == 0)
+        {
+            if (kullaniciUrlListesi.Contains(menu.SayfaUrl))
+            {
+                aktifYoneticiMenuleri.Add(menu);
+            }
+        }
+        else
+        {
+            foreach (var altMenu in yoneticiAltMenuleri)
+            {
+                if (kullaniciUrlListesi.Contains(altMenu.SayfaUrl))
+                {
+                    aktifYoneticiMenuleri.Add(altMenu);
+                    menuEklensinMi = true;
+                }
+            }
+            if (menuEklensinMi)
+            {
+                aktifYoneticiMenuleri.Add(menu);
+            }
+        }
+    }
+}
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="/YeniCore_Ynt1mPnl/AdminAnasayfa/Index" style="color:navy; font-size: 22px;">
+            Live Medy Test Case
+
+        </a>
+    </div>
+    <!-- /.navbar-header -->
+    <ul class="nav navbar-top-links navbar-right">
+        <!-- /.dropdown -->
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                @ViewBag.AktifKullaniciAdi <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+                <li>
+                    <a href="/YeniCore_Ynt1mPnl/Login/Cikis"><i class="fa fa-sign-out fa-fw"></i>Güvenli Çıkış</a>
+                </li>
+                <li>
+                    <a href="/YeniCore_Ynt1mPnl/AdminKullanicilar/SifreDegistir"><i class="fa fa-sign-out fa-fw"></i>Şifre Değiştir</a>
+                </li>
+            </ul>
+            <!-- /.dropdown-user -->
+        </li>
+        <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+    <div id="time" class="navbar-right"></div>
+
+    <a href="#frmMenuler" data-toggle="collapse" class="left-sidebar-toggle open visible-xs">Menüler</a>
+    <div class="navbar-default sidebar" role="navigation">
+        <div id="frmMenuler" class="sidebar-nav navbar-collapse collapse">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="/YeniCore_Ynt1mPnl/AdminAnasayfa/Index"><i class="fa fa-wrench fa-fw"></i>Anasayfa</a>
+                </li>
+                @foreach (LiveMedyYntMenuler menu in aktifYoneticiMenuleri.Where(m => m.UstMenuId == -1))
+                {
+                    yoneticiAltMenuleri = aktifYoneticiMenuleri.Where(m => m.UstMenuId == menu.MenuId).ToList();
+                    if (yoneticiAltMenuleri.Count == 0)
+                    {
+                        <li>
+                            <a href="@menu.SayfaUrl"><i class="fa fa-edit fa-fw"></i>@menu.Adi</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i>@menu.Adi<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                @foreach (var altMenu in yoneticiAltMenuleri)
+                                {
+                                    <li>
+                                        <a href="@altMenu.SayfaUrl">@altMenu.Adi</a>
+                                    </li>
+                                }
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+
+</nav>

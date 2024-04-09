@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "HakDuzenle";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+
+@model LiveMedy.Areas.YeniCore_Ynt1mPnl.Models.DTO.RolHaklari
+@{
+    List<LiveMedy.Models.LiveMedyYntAksiyonlar> tumAksiyonlar = ViewBag.TumAksiyonlar;
+}
+
+<partial name="~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/AdminUyariMesajlariPart.cshtml" />
+@using (Html.BeginForm("HakDuzenle", "AdminYoneticiRolleri", FormMethod.Post, new { @role = "form", @id = "frmRolHakDuzenle" }))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>YÖNETİCİ ROLÜ HAK DÜZENLE</h4>
+        </div>
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
+
+            @Html.Hidden("RolId", Model.Rol.RolId)
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        "@Html.Label(Model.Rol.Adi)" Rolü
+                    </div>
+                </div>
+
+                @foreach (var aksiyon in tumAksiyonlar)
+                {
+                    bool hakvarMi = false;
+                    if (Model.Haklar.Where(a => a.AksiyonId == aksiyon.AksiyonId).ToList().Count > 0)
+                    { hakvarMi = true; }
+
+                    <div class="row kullaniciHak">
+                        <div class="col-md-8">
+                            @if (Model.Rol.SabitMi != true)
+                            {
+                                if (aksiyon.KontrolAdi != "AdminMenuler" && aksiyon.KontrolAdi != "AdminYoneticiler" && aksiyon.KontrolAdi != "AdminYoneticiRolleri" && aksiyon.KontrolAdi != "AdminYoneticiIslemRaporlari")
+                                {
+                                    @Html.CheckBox("chk_" + aksiyon.AksiyonId.ToString(), hakvarMi, new { @class = "check-checkbox", @id = @aksiyon.AksiyonId })
+                                }
+                                else
+                                {
+                                    @Html.CheckBox("chk_" + aksiyon.AksiyonId.ToString(), hakvarMi, new { @class = "check-checkbox", @id = @aksiyon.AksiyonId, @disabled = "disabled" })
+                                }
+                            }
+                            else
+                            {
+                                @Html.CheckBox("chk_" + aksiyon.AksiyonId.ToString(), hakvarMi, new { @class = "check-checkbox", @id = @aksiyon.AksiyonId, @disabled = "disabled" })
+                            }
+                            <span class="kullaniciHakAdi">@Html.Raw(aksiyon.KontrolAdi + " - " + aksiyon.Adi)</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (Model.Rol.SabitMi != true)
+            {
+                <div class="form-group push-top-20">
+                    <input type="button" value="Kaydet" class="btn btn-default" onclick='HaUnbaydet()' />
+                </div>
+            }
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Listeye geri dön", "Index")
+        </div>
+    </div>
+}
+
+<script>
+    function HaUnbaydet() {
+        BootstrapDialog.confirm('Kaydetmek istediğinize emin misiniz?', function (result) {
+            if (result) {
+                $("#frmRolHakDuzenle").submit();
+            }
+        })
+    }
+</script>

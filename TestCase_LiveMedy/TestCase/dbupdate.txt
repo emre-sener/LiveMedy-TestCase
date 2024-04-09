@@ -1,0 +1,2 @@
+canlı
+Scaffold-DbContext "Server=94.199.202.242;Initial Catalog=futbola1_livemedy;User ID=TstCase;Password=Asdasd11?.;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" Microsoft.EntityFrameworkCore.SqlServer  -OutputDir Models -Context LiveMedyContext -Force   -NoPluralize

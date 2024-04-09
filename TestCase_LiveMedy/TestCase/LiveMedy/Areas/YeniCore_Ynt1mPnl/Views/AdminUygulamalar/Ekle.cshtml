@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+@model LiveMedy.Models.LiveMedyYntUygulamalar
+
+<partial name="~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/AdminUyariMesajlariPart.cshtml" />
+@using (Html.BeginForm("Ekle", "AdminUygulamalar", FormMethod.Post, new { @role = "form", @id = "frmUygulamaEkle" }))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Uygulama Ekle</h4>
+        </div>
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
+            <partial name="~/Areas/YeniCore_Ynt1mPnl/Views/AdminUygulamalar/Partials/UygulamaFormPart.cshtml" />
+            <div class="form-group col-md-offset-2">
+                <input type="submit" value="Kaydet" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="panel-footer">
+            @Html.ActionLink("Listeye geri dön", "Index")
+        </div>
+    </div>
+}
+

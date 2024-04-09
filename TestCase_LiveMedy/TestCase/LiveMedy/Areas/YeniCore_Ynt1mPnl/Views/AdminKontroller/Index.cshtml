@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "KontrolListesi";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+@model List<LiveMedy.Models.LiveMedyYntUygulamalar>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>UYGULAMA KONTROL LİSTESİ</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>Uygulama Adı</th>
+                            <th>Url</th>
+                            <th>Uygulama Durum</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr id="tr_@item.UygulamaId">
+                                <td>@item.UygulamaAdi</td>
+                                <td>@item.UygulamaUrl</td>
+
+                                <td>
+                                    <button style="border: 2px solid navy; background-color: navy; color: white;" type="button" id="btnKontrol" onclick="KontrolIslemleri(@item.UygulamaId)">Kontrol Et</button>
+                                </td>
+
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    function KontrolIslemleri(id) {
+        $.ajax({
+            type: "GET",
+            url: "/YeniCore_Ynt1mPnl/AdminKontroller/UygulamaKontrol/" + id,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                BootstrapDialog.alert('Status:' + data);
+            },
+            error: function () {
+                BootstrapDialog.alert('Geçersiz Url!');
+            }
+        });
+    }
+</script>
+
+<link href="~/css/core.css" rel="stylesheet" />
+<script src="~/js/core.js"></script>

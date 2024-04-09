@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewData["Title"] = "Duzenle";
+    Layout = "~/Areas/YeniCore_Ynt1mPnl/Views/Shared/YonetimPanelAnaKatman.cshtml";
+}
+
+@using LiveMedy.Areas.YeniCore_Ynt1mPnl.Models.DTO
+@model LiveMedy.Models.LiveMedyYntYoneticiler
+
+<partial name="~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/AdminUyariMesajlariPart.cshtml" />
+@using (Html.BeginForm("Duzenle", "AdminYoneticiler", FormMethod.Post, new { @role = "form", @id = "frmYoneticiDuzenle" }))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>YÖNETİM PANELİ KULLANICISI DÜZENLE</h4>
+        </div>
+        <div class="panel-body">
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.HiddenFor(y => y.YoneticiId)
+                @Html.HiddenFor(y => y.KullaniciAdi)
+
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Rolü</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @if ((bool)Model.IptalMi)
+                        {
+                            @Html.Raw(Model.Rol)
+                        }
+                        else
+                        {
+                            if (Model.RolId == 1)
+                            {
+                                <span style="color:brown; font-weight:bold">Süper Yönetici (Düzenlenemez)</span>
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(y => y.RolId, new SelectList(ViewBag.Roller, "RolId", "Adi"), new { @class = "form-control" })
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Adı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.Raw(Model.Adi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Soyadı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.Raw(Model.Soyadi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Kullanıcı Adı</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.Raw(Model.KullaniciAdi)
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">E-Posta</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @if ((bool)Model.IptalMi)
+                        {
+                            @Html.Raw(Model.Eposta)
+                        }
+                        else
+                        {
+                            if (Model.RolId == 1)
+                            {
+                                @Html.Raw(Model.Eposta)
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(y => y.Eposta, new { @class = "required email form-control" })
+                                @Html.ValidationMessageFor(y => y.Eposta)
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="col-md-2">
+                        <label class="control-label">Telefon</label>
+                    </div>
+                    <div class="col-lg-6">
+                        @if ((bool)Model.IptalMi)
+                        {
+                            @Html.Raw(Model.TelefonNo)
+                        }
+                        else
+                        {
+                            if (Model.RolId == 1)
+                            {
+                                @Html.Raw(Model.TelefonNo)
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(h => h.TelefonNo, new { @class = " form-control numbers", @type = "text", @placeholder = "5552321234", @maxlength = "10", @minlength = "10", @required = "required" })
+
+                                @Html.ValidationMessageFor(y => y.TelefonNo)
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Aktif Mi?</label>
+                    </div>
+                    <div class="col-md-10">
+                        @if ((bool)Model.IptalMi)
+                        {
+                            @Html.Raw("Pasif")
+                        }
+                        else
+                        {
+                            if (Model.RolId == 1)
+                            {
+                                @Html.CheckBox("AktifMi", (bool)(Model == null ? true : Model.AktifMi), new { @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.CheckBox("AktifMi", (bool)(Model == null ? true : Model.AktifMi))
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">İptal Mi?</label>
+                    </div>
+                    <div class="col-md-10">
+                        @if ((bool)Model.IptalMi)
+                        {
+                            @Html.Raw("İptal")
+                        }
+                        else
+                        {
+                            if (Model.RolId == 1)
+                            {
+                                @Html.CheckBox("IptalMi", (bool)(Model == null ? false : Model.IptalMi), new { @disabled = "disabled" })
+                            }
+                            else
+                            {
+                                @Html.CheckBox("IptalMi", (bool)(Model == null ? false : Model.IptalMi))
+                            }
+                        }
+                    </div>
+                </div>
+
+              
+            </div>
+            <partial name="~/Areas/YeniCore_Ynt1mPnl/Views/Shared/Part/TarihGoruntulemePart.cshtml" model="@(new TarihBilgileri { EklemeTarihi = Convert.ToDateTime(Model.EklemeTarihi), GuncellemeTarihi = Convert.ToDateTime(Model.GuncellemeTarihi) })" />
+            @if (!(bool)Model.IptalMi && Model.RolId != 1)
+            {
+                <div class="form-group col-md-offset-2">
+                    <input type="submit" value="Kaydet" class="btn btn-default" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Listeye geri dön", "Index")
+</div>
+
+
